@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
 using API_Consumer;
+using System.IO.Compression;
 
 namespace SQLAPI_Consumer
 {
@@ -14,6 +15,7 @@ namespace SQLAPI_Consumer
     /// </summary>
     public static class APIConsumer
     {
+        #region Constaints
         /// <summary>
         /// Fixed Context type supported.
         /// </summary>
@@ -62,6 +64,11 @@ namespace SQLAPI_Consumer
 
         private enum ParamsName { webMethod , URL }
 
+        #endregion
+
+
+        #region POST Methods
+
         /// <summary>
         /// POST to Resful API sending Json body.
         /// </summary>
@@ -95,11 +102,14 @@ namespace SQLAPI_Consumer
                 }
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -146,11 +156,14 @@ namespace SQLAPI_Consumer
                 }
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader?.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader?.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -216,11 +229,14 @@ namespace SQLAPI_Consumer
                 }
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -327,24 +343,28 @@ namespace SQLAPI_Consumer
                     extResult.Server = httpResponse.Server;
                     extResult.StatusCode = ((int)httpResponse?.StatusCode).ToString();
                     extResult.StatusDescription = httpResponse.StatusDescription;
-                }
-
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    extResult.Result = ContentResult = result;
 
                     for (int i = 0; i < httpResponse.Headers.Count; ++i)
                     {
                         extResult.headers.Add(
-                                                   new Headers()
-                                                   {
-                                                       Name = httpResponse.Headers.Keys[i],
-                                                       Value = httpResponse.Headers[i]
-                                                   }
-                                            );
+                            new Headers()
+                            {
+                                Name = httpResponse.Headers.Keys[i],
+                                Value = httpResponse.Headers[i]
+                            }
+                        );
                     }
                 }
+
+                extResult.Result = ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    extResult.Result = ContentResult = result;
+
+                //}
             }
             catch (WebException ex)
             {
@@ -436,11 +456,14 @@ namespace SQLAPI_Consumer
                 }
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -469,6 +492,10 @@ namespace SQLAPI_Consumer
             return ContentResult;
         }
 
+        #endregion
+
+        #region GET Methods
+
         /// <summary>
         /// Request GET Method to the URL API provided.
         /// </summary>
@@ -489,14 +516,18 @@ namespace SQLAPI_Consumer
                     request.Headers.Add(HttpRequestHeader.Authorization, Authorization);
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
+
                 using (var stream = ex.Response?.GetResponseStream())
                 {
                     if (stream != null)
@@ -550,11 +581,14 @@ namespace SQLAPI_Consumer
                 }
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -617,11 +651,14 @@ namespace SQLAPI_Consumer
                 }
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -671,11 +708,14 @@ namespace SQLAPI_Consumer
                     request.Headers.Add(HttpRequestHeader.Authorization, Authorization);
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -725,12 +765,16 @@ namespace SQLAPI_Consumer
                     request.Headers.Add(HttpRequestHeader.Authorization, Authorization);
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ObjectResult = JsonConvert.DeserializeObject<T>(result);
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+                ObjectResult = JsonConvert.DeserializeObject<T>(ContentResult);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ObjectResult = JsonConvert.DeserializeObject<T>(result);
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -780,12 +824,16 @@ namespace SQLAPI_Consumer
                     request.Headers.Add(HttpRequestHeader.Authorization, Authorization);
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ObjectResult = JsonConvert.DeserializeObject<T>(result);
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+                ObjectResult = JsonConvert.DeserializeObject<T>(ContentResult);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ObjectResult = JsonConvert.DeserializeObject<T>(result);
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -893,25 +941,26 @@ namespace SQLAPI_Consumer
                     extResult.Result = ContentResult;
                     extResult.StatusCode = ((int)httpResponse.StatusCode).ToString();
                     extResult.StatusDescription = httpResponse.StatusDescription;
-                }
-
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    extResult.Result = ContentResult = result;
 
                     for (int i = 0; i < httpResponse.Headers.Count; ++i)
                     {
                         extResult.headers.Add(
-                                                   new Headers()
-                                                   {
-                                                       Name = httpResponse.Headers.Keys[i],
-                                                       Value = httpResponse.Headers[i]
-                                                   }
-                                            );
+                            new Headers()
+                            {
+                                Name = httpResponse.Headers.Keys[i],
+                                Value = httpResponse.Headers[i]
+                            }
+                        );
                     }
-
                 }
+
+                extResult.Result = ContentResult = GetContentResult(httpResponse);
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    extResult.Result = ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -959,6 +1008,9 @@ namespace SQLAPI_Consumer
             return ContentResult;
         }
 
+        #endregion
+
+        #region WebMethod
 
         /// <summary>
         /// POST to Resful API sending Json body.
@@ -1037,11 +1089,14 @@ namespace SQLAPI_Consumer
                 }
 
                 var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    ContentResult = result;
-                }
+                ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -1153,25 +1208,27 @@ namespace SQLAPI_Consumer
                     extResult.Server = httpResponse.Server;
                     extResult.StatusCode = ((int)httpResponse.StatusCode).ToString();
                     extResult.StatusDescription = httpResponse.StatusDescription;
-                }
-
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    extResult.Result = ContentResult = result;
 
                     for (int i = 0; i < httpResponse.Headers.Count; ++i)
                     {
                         extResult.headers.Add(
-                                                   new Headers()
-                                                   {
-                                                       Name = httpResponse.Headers.Keys[i],
-                                                       Value = httpResponse.Headers[i]
-                                                   }
-                                            );
+                            new Headers()
+                            {
+                                Name = httpResponse.Headers.Keys[i],
+                                Value = httpResponse.Headers[i]
+                            }
+                        );
                     }
-
                 }
+
+                extResult.Result = ContentResult = GetContentResult(httpResponse);
+
+                //Replaced with GetContentResult(httpResponse)
+                //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                //{
+                //    var result = streamReader.ReadToEnd();
+                //    extResult.Result = ContentResult = result;
+                //}
             }
             catch (WebException ex)
             {
@@ -1218,6 +1275,10 @@ namespace SQLAPI_Consumer
 
             return ContentResult;
         }
+
+        #endregion
+
+        #region Private Methods
 
         private static void validateParams(ParamsName pname, string paramVal)
         {
@@ -1272,5 +1333,41 @@ namespace SQLAPI_Consumer
                                                  | SecurityProtocolType.Ssl3 
                                                  | (SecurityProtocolType)3072;
         }
+
+        /// <summary>
+        /// Will check the response to determine if it is compressed then decompress it.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns>ContentResult as a string</returns>
+        private static string GetContentResult(HttpWebResponse response)
+        {
+            try
+            {
+                Stream responseStream = response.GetResponseStream();
+
+                if (response.ContentEncoding != null && response.ContentEncoding.Equals("gzip", StringComparison.OrdinalIgnoreCase))
+                {
+                    responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                }
+                else if (response.ContentEncoding != null && response.ContentEncoding.Equals("deflate", StringComparison.OrdinalIgnoreCase))
+                {
+                    responseStream = new DeflateStream(responseStream, CompressionMode.Decompress);
+                }
+                // Handle Brotli compression if needed
+
+                using (StreamReader reader = new StreamReader(responseStream))
+                {
+                    string responseBody = reader.ReadToEnd();
+                    return responseBody;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception as needed
+                return ex.Message.ToString();
+            }
+        }
+
+        #endregion
     }
 }
